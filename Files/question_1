@@ -1,0 +1,117 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+
+namespace Practical_1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            ///* ----- FILE PROPERTIES ----- */
+
+            //FileInfo f = new FileInfo("question_1.txt");
+            //string fileName = f.Name;                       // creating string variable to hold the file NAME
+            //Console.WriteLine(fileName);                    // writing file name to console
+            //Console.ReadLine();
+
+            //string fullName = f.FullName;                   // creating string to hold FULLNAME
+            //DateTime creationTime = f.CreationTime;         // creating date and time variable to hold CREATION TIME
+            //DateTime latAccessTime = f.LastAccessTime;      // creating date and time variable to hol LAST ACCESS TIME
+            //long length = f.Length;                         // long variable to hold LENGTH of file
+            //string directoryName = f.DirectoryName;         // string for DIRECTORY NAME
+
+
+
+            /* --- Question 1 --- */
+
+            // PART i.
+            Q1();        // calling method to write verse of song
+
+            // PART ii.
+            Q2();       // calling method to display first line to console
+
+            // PART$ iii.
+            Q3();       // calling method to display third line to console
+
+            Q4();       // calling method to read in and display all lines with a LOOP
+
+
+        }
+        static void Q1()
+        {
+            FileStream fs = new FileStream(@"question_1.txt", FileMode.Create, FileAccess.Write);   // creates a steam that supports read an write to file named question_1 in debug folder
+
+            StreamWriter sw = new StreamWriter(fs); //  creating stream to WRITE to FileStream
+
+            // verse of song
+            sw.WriteLine("Go on home british soldiers");
+            sw.WriteLine("Go on home");
+            sw.WriteLine("Have you got no f**cking homes of your own");
+            sw.WriteLine("For 800 years, we fought you with out fear");
+            sw.WriteLine("And we'll fight you for 800 hundred more");
+
+            sw.Close();       // closing the steam
+
+        }    // method to write verse of song to text file
+
+        static void Q2()
+        {
+            FileStream fs = new FileStream("question_1.txt", FileMode.Open, FileAccess.Read);
+            StreamReader sr = new StreamReader(fs);
+            string lineIN = sr.ReadLine();
+            Console.WriteLine(lineIN);
+            sr.Close();
+
+            Console.ReadKey();
+        }    // method to display first line of text file
+
+        static void Q3()      // method to display third line from text file
+        {
+            FileStream fs = new FileStream("question_1.txt", FileMode.Open, FileAccess.Read);
+
+            StreamReader sr = new StreamReader(fs);
+
+            string lineIN = sr.ReadLine(); // reading in first line of text
+            lineIN = sr.ReadLine();        // reading in second line (overwrites whats in variable 'lineIN'
+            lineIN = sr.ReadLine();        // reading in third line - overwrites again
+            Console.WriteLine(lineIN);     // displaying third line to console
+            // OR
+                                            
+            string lineIn = "";            // variable to hold lineIN
+            for (int i = 0; i < 3; i++)    // loop going to run 3 times
+            {
+                lineIn = sr.ReadLine();    // runs 3 times
+            }
+            Console.WriteLine(lineIn);     // displays third line
+            sr.Close();
+
+            Console.ReadKey();            // pauses window
+
+        }
+
+        static void Q4()      // method to display all lines in file with a LOOP
+
+        {
+            FileStream fs = new FileStream("question_1.txt", FileMode.Open, FileAccess.Read); // opening strem with reading and writiing abilties
+
+            StreamReader sr = new StreamReader(fs);    // creating stream to read from file
+
+            string lineIn = sr.ReadLine(); // declaring and assigning variable to store line read in, and also reading first line at the same time
+
+            while (lineIn!=null)           // creating loop to read lines in, !=null means it will read while there are no EMPTY lines
+            {
+                lineIn = sr.ReadLine();
+                Console.WriteLine(lineIn);
+            }
+
+            sr.Close();
+
+        }
+    }
+}
