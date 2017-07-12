@@ -1,0 +1,93 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace question_2
+    /* Question 2 -- reading data from file and creating report --- */
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            FileStream fs = new FileStream("temp.txt", FileMode.Create, FileAccess.Write);   // creating stream with methods to both read and write
+
+            StreamWriter sw = new StreamWriter(fs); // assigning stream Writer to the file stream 
+
+            // creates a CSV file with 5 lines stored in the debug folder
+            sw.WriteLine("23/11/2013,8");
+            sw.WriteLine("24/11/2013,6");
+            sw.WriteLine("25/11/2013,2");
+            sw.WriteLine("26/11/2013,5");
+            sw.WriteLine("27/11/2013,9");
+
+            sw.Flush(); // gets rid of anything that is not collecting in 'garbage collection'
+            sw.Close(); // closing the stream
+
+
+
+
+            // reading date from the file just created
+
+             fs = new FileStream("temp.txt", FileMode.Open, FileAccess.Read);
+
+            StreamReader sr = new StreamReader(fs); // reading from the file stream
+
+            // formatting
+            string tableFormat = "{0,-15}{1,-15}";
+
+            // variables
+            int total = 0;
+            double average = 0;
+            string[] tempFile = new string[2];    // array to store the 2 values of DATE and TEMPATURE
+            string[] date = new string[5];
+            int[] tempature = new int[5];
+
+            string lineIn = sr.ReadLine(); // reading in first line
+
+            int i = 0;
+            int count = 0;
+            while (lineIn!=null)
+            {
+                tempFile = lineIn.Split(',');
+
+                date[i] = tempFile[0];
+                tempature[i] = int.Parse(tempFile[1]);
+
+                total += tempature[i];
+                lineIn = sr.ReadLine();
+                i++;
+                count++;
+               
+            }
+            average = (double)total / count;
+
+            sr.Close();
+
+
+            // all data is now read and stored in arrays TEMPATURE and DATE
+            Console.WriteLine("Temperature Report\n");
+            Console.WriteLine(tableFormat, "Date", "Temperature");
+            Console.WriteLine(tableFormat, date[0], tempature[0]);
+            Console.WriteLine(tableFormat, date[1], tempature[1]);
+            Console.WriteLine(tableFormat, date[2], tempature[2]);
+            Console.WriteLine(tableFormat, date[3], tempature[3]);
+            Console.WriteLine(tableFormat, date[4], tempature[4]);
+            Console.WriteLine();
+            Console.WriteLine(tableFormat, "Average", average);
+            Console.ReadKey();
+
+
+
+
+
+
+
+
+
+
+        }
+    }
+}
