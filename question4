@@ -1,0 +1,37 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace question_4
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // opening stream to write
+            FileStream fs = new FileStream(@"paidup.txt", FileMode.Create, FileAccess.Write);
+
+            // assigning streamwriter to filestream
+            StreamWriter sw = new StreamWriter(fs);
+
+            //string paid = "";  // string to hold name of person who paid
+            string repeat = "";  // to enter as many names as user wants
+            string paid = "";    // variable for input
+            do
+            {
+               Console.WriteLine("\nEnter name of person who paid : ");  // input from user
+                paid = Console.ReadLine();        // assigning paid to user input
+                sw.WriteLine(paid);
+
+                Console.WriteLine("\nDo you want to repeat?");     // asking user if they want to repeat
+                repeat = Console.ReadLine().ToLower();          // reading the user input 
+            }
+            while (repeat == "yes");                            // checking user input if for "yes"
+           
+            sw.Close();                                        // closing the stream
+        }
+    }
+}
